@@ -10,12 +10,18 @@ var MessagesView = {
     // when this view loads.
   },
 
-  render: function() {
+  render: function(data) {
     // TODO: Render _all_ the messages.
+    data.forEach(message => {
+      MessagesView.renderMessage(message);
+    })
   },
 
   renderMessage: function(message) {
     // TODO: Render a single message.
+    let $message = $('<div class="message"></div>');
+    $message.text(message.text);
+    $('#chats').append($message);
   },
 
   handleClick: function(event) {
