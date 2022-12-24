@@ -12,6 +12,7 @@ var MessagesView = {
 
   render: function(data) {
     // TODO: Render _all_ the messages.
+    MessagesView.$chats.html('');
     data.forEach(message => {
       MessagesView.renderMessage(message);
     })
@@ -19,8 +20,12 @@ var MessagesView = {
 
   renderMessage: function(message) {
     // TODO: Render a single message.
-    let $message = $('<div class="message"></div>');
-    $message.text(message.text);
+    let $message = MessageView.render({
+      username: message.username,
+      text: message.text,
+      time: message.createdAt
+    });
+
     $('#chats').append($message);
   },
 

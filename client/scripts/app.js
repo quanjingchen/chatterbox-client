@@ -8,6 +8,8 @@ var App = {
 
   username: 'anonymous',
 
+
+
   initialize: function() {
     App.username = window.location.search.substr(10);
 
@@ -27,8 +29,9 @@ var App = {
     Parse.readAll((data) => {
       // examine the response from the server request:
       console.log(data);
-
+      Messages.insert(data);
       // TODO: Use the data to update Messages and Rooms
+      RoomsView.render(data);
       MessagesView.render(data);
       // and re-render the corresponding views.
       callback();
