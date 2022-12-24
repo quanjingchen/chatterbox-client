@@ -13,7 +13,22 @@ var Messages = {
     return Messages._data;
   },
 
+<<<<<<< HEAD
   insert: newData => {
     Messages._data = newData;
   }
+=======
+  insert: function(data) {
+    Messages._data = data;
+  },
+
+  retrieveAll: function() {
+    return Messages._data;
+  },
+
+  render: function() {
+    MessagesView.render();
+  }
+
+>>>>>>> solo
 };

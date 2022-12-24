@@ -26,6 +26,7 @@ var App = {
   },
 
   fetch: function(callback = ()=>{}) {
+    // console.log(callback);
     Parse.readAll((data) => {
       // examine the response from the server request:
       console.log(data);
@@ -36,6 +37,7 @@ var App = {
       // and re-render the corresponding views.
       callback();
     });
+    callback();
   },
 
   startSpinner: function() {
