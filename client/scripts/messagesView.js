@@ -15,7 +15,7 @@ var MessagesView = {
     MessagesView.$chats.html('');
     data.forEach(message => {
       MessagesView.renderMessage(message);
-    })
+    });
   },
 
   renderMessage: function(message) {
