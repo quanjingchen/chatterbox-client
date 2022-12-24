@@ -10,4 +10,16 @@ var Messages = {
   // TODO: Define methods which allow you to retrieve from,
   // add to, and generally interact with the messages.
 
+  insert: function(data) {
+    Messages._data = data;
+  },
+
+  retrieveAll: function() {
+    return Messages._data;
+  },
+
+  render: function() {
+    MessagesView.render();
+  }
+
 };

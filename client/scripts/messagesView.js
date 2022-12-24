@@ -8,14 +8,26 @@ var MessagesView = {
   initialize: function() {
     // TODO: Perform any work which needs to be done
     // when this view loads.
+    // MessagesView.render();
+    MessagesView.$chats.html('<p>Loading messages</p>');
   },
 
   render: function() {
     // TODO: Render _all_ the messages.
+    // Clear html elements
+    MessagesView.$chats.html('');
+
+    var data = Messages.retrieveAll();
+    for (var item of data) {
+      MessagesView.renderMessage(item);
+    }
+
   },
 
   renderMessage: function(message) {
     // TODO: Render a single message.
+    var item = MessageView.render(message);
+    MessagesView.$chats.append(item);
   },
 
   handleClick: function(event) {
