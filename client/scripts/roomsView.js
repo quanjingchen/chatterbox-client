@@ -7,23 +7,23 @@ var RoomsView = {
   $select: $('#rooms select'),
   $input: $('#room'),
 
-  initialize: function() {
+  initialize: function () {
     // TODO: Perform any work which needs to be done
     // when this view loads.
+    RoomsView.$select.unbind();
+    RoomsView.$button.unbind();
+
     Parse.readAll(data => {
       RoomsView.render(data);
     });
     RoomsView.$select.change(RoomsView.handleChange);
-    $('#newroom').click(RoomsView.handleClick);
+    RoomsView.$button.click(RoomsView.handleClick);
   },
 
-  render: function(data) {
+  render: function (data) {
     // TODO: Render out the list of rooms.
     data.forEach(tweet => {
-      // if (!container[tweet.roomname]) {
-      //   container[tweet.roomname] = true;
-      // }
-      Rooms.insertOne(tweet.roomname);
+      Rooms.add(tweet.roomname);
     });
 
     RoomsView.$select.html('');
@@ -34,41 +34,47 @@ var RoomsView = {
     }
   },
 
-  renderRoom: function(roomname) {
+  renderRoom: function (roomname) {
     // TODO: Render out a single room.
     let data = Messages.retrieve();
-    MessagesView.render(data.filter(message => {
-      if (roomname === 'null') {
-        return true;
+    if (!Rooms.retrieve().has(roomname)) {
+      Rooms.add(roomname);
+      RoomsView.$select.html('');
+      var container = Rooms.retrieve();
+      for (let room of container) {
+        let current = $(`<option>${room}</option>`);
+        RoomsView.$select.append(current);
       }
-      return message.roomname === roomname;
-    }));
+    }
+    if (data !== null) {
+      MessagesView.render(data.filter(message => {
+        if (roomname === 'null') {
+          return true;
+        }
+        return message.roomname === roomname;
+      }));
+    }
+
   },
 
   handleChange: event => {
     // var selectedOption = $(this).val();
     RoomsView.renderRoom(event.target.value);
+    // Rooms.setCurrent(event.target.value);
+    console.log('current room: ', event.target.value);
   },
 
-  // handleClick: () => {
-  //   var newRoom =
-  //   console.log($('#room').text());
-  // }
-
-  handleClick: function(event) {
+  handleClick: function (event) {
     event.preventDefault();
-    var formData = $(this).serializeArray();
-    var newRoom = formData[0].value;
+    var newRoom = RoomsView.$input.val();
+    console.log('add new room: ', newRoom);
     let newOption = $(`<option>${newRoom}</option>`);
     var container = Rooms.retrieve(); // rooms from server
     // only when newoption is not in the room list
     if (!container.has(newRoom)) {
-      Rooms.insertOne(newRoom);
       RoomsView.$select.prepend(newOption);
     }
-
-    // avoid duplicate room in the drop down list local;
-    console.log(newRoom);
+    Rooms.add(newRoom);
   },
 
 };

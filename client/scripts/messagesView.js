@@ -5,51 +5,64 @@ var MessagesView = {
 
   $chats: $('#chats'),
 
-  initialize: function() {
+  initialize: function () {
     // TODO: Perform any work which needs to be done
     // when this view loads.
     // MessagesView.render();
-    MessagesView.$chats.html('<p>Loading messages</p>');
+    // MessagesView.$chats.html('<p>Loading messages</p>');
+
   },
 
-  render: function(data) {
+  render: function (data) {
     // TODO: Render _all_ the messages.
-<<<<<<< HEAD
+
     MessagesView.$chats.html('');
     data.forEach(message => {
       MessagesView.renderMessage(message);
     });
-=======
-    // Clear html elements
-    MessagesView.$chats.html('');
-
-    var data = Messages.retrieveAll();
-    for (var item of data) {
-      MessagesView.renderMessage(item);
-    }
-
->>>>>>> solo
+    $('span.username').on('click', MessagesView.handleClick);
   },
 
-  renderMessage: function(message) {
+  renderMessage: function (message) {
     // TODO: Render a single message.
-<<<<<<< HEAD
-    let $message = MessageView.render({
-      username: message.username,
-      text: message.text,
-      time: message.createdAt
+
+    var $message = MessageView.render({
+      username: MessagesView.encodeHTML(message.username),
+      text: MessagesView.encodeHTML(message.text),
+      time: message.updated_at
     });
 
+    if (Friends.toggleStatus(message.username)) {
+      $message = $message.replace('chat', 'chat friend');
+    }
     $('#chats').append($message);
-=======
-    var item = MessageView.render(message);
-    MessagesView.$chats.append(item);
->>>>>>> solo
   },
 
-  handleClick: function(event) {
+  encodeHTML: function (text) {
+    if (text === null) {
+      return text;
+    } else {
+      return text.replace(/[<>&'"]/g, function (c) {
+        switch (c) {
+          case '<': return '&lt;';
+          case '>': return '&gt;';
+          case '&': return '&amp;';
+          case '\'': return '&#39;';
+          case '"': return '&quot;';
+        }
+      });
+    }
+  },
+
+  handleClick: function (e) {
     // TODO: handle a user clicking on a message
     // (this should add the sender to the user's friend list).
+    var friend = e.target.innerText;
+    Friends.add(friend);
+    // let data = Messages.retrieve();
+    // MessagesView.render(data);
+    var currentRoom = $("select :selected").text();
+    RoomsView.renderRoom(currentRoom);
   }
 
 };

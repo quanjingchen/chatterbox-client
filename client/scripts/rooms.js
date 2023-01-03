@@ -9,10 +9,11 @@ var Rooms = {
 
   // TODO: Define methods which allow you to add rooms, update the list,
   // mark a room as selected, etc.
-  insertOne: (room) => {
+  add: (room) => {
+    // console.log('called add room: ', room);
     Rooms._data.add(room);
   },
 
-  retrieve: () => {return Rooms._data},
+  retrieve: () => { return Rooms._data; },
 
 };

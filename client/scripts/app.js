@@ -35,7 +35,7 @@ var App = {
       RoomsView.render(data);
       MessagesView.render(data);
       // and re-render the corresponding views.
-      callback();
+      // callback();
     });
     callback();
   },

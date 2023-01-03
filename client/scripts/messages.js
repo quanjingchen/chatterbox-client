@@ -13,11 +13,6 @@ var Messages = {
     return Messages._data;
   },
 
-<<<<<<< HEAD
-  insert: newData => {
-    Messages._data = newData;
-  }
-=======
   insert: function(data) {
     Messages._data = data;
   },
@@ -30,5 +25,4 @@ var Messages = {
     MessagesView.render();
   }
 
->>>>>>> solo
 };

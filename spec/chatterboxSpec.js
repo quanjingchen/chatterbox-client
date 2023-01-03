@@ -104,9 +104,9 @@ describe('chatterbox', function() {
       window.prompt = sinon.stub().returns('testroom');
 
       App.initialize();
+      console.log($('#rooms').find('button'));
       $('#rooms').find('button').trigger('click');
       expect(Rooms.add.called).to.be.true;
-
       window.prompt = prompt;
       Rooms.add.restore();
     });
